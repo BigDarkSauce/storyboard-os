@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Storyboard OS — ChatGPT Capture",
+  "version": "0.1.0",
+  "description": "Privately syncs ChatGPT conversation messages to your Storyboard OS Supabase workspace.",
+  "permissions": ["storage", "alarms"],
+  "host_permissions": ["https://chatgpt.com/*", "https://chat.openai.com/*", "https://*.supabase.co/*"],
+  "background": {"service_worker": "service-worker.js"},
+  "action": {"default_popup": "popup.html", "default_title": "Storyboard OS capture"},
+  "content_scripts": [{
+    "matches": ["https://chatgpt.com/*", "https://chat.openai.com/*"],
+    "js": ["content.js"],
+    "run_at": "document_idle"
+  }]
+}
