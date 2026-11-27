@@ -41,6 +41,10 @@ Storyboard OS is a static browser application. It presents captured learning con
 
 The GitHub Actions workflow deploys the static repository root to GitHub Pages. Enable Pages with **Settings → Pages → GitHub Actions** if it is not already configured.
 
-## Future integration options
+## Supabase integration
 
-A later integration may accept explicit conversation exports or a user-authorized API/connector. Any such integration should be opt-in, scoped, auditable, and reversible. Do not store API secrets in browser code or public repository files.
+The current integration design and delivery status are documented in [`INTEGRATION_ROADMAP.md`](INTEGRATION_ROADMAP.md), with setup steps in [`SUPABASE_SETUP.md`](SUPABASE_SETUP.md). The SQL schema is in `supabase/schema.sql`; the Chromium extension is in `extension/`.
+
+The extension uses Supabase Auth and a user JWT to upsert rendered ChatGPT messages into a private table protected by row-level security. It observes the ChatGPT DOM and is therefore best-effort rather than a guaranteed transcript API. Users can pause or disconnect it. Existing cloud records are not deleted when the extension is disconnected.
+
+The Action Canvas remains localStorage-backed until the separate cloud workspace frontend is completed. The workspace and curated profile tables are provisioned as contracts only; they do not themselves enable syncing. Mobile Safari support requires a separately packaged and tested Safari Web Extension. Do not store service-role keys or other secrets in browser code or public repository files.
