@@ -28,9 +28,13 @@ The file `memory/BASELINE.md` is a preserved snapshot of the learning preference
 
 Application data stored in the browser is separate from Git-tracked files. Export it regularly if you want a portable backup. Repository changes are versioned by Git; use GitHub's commit history or revert a commit to roll back code and documentation.
 
-## Current limitations
+## Supabase integration (in progress)
 
-This app does not automatically intercept or redirect every ChatGPT reply. To bring a conversation into the Action Canvas, use **Capture** or import a JSON export. Automatic synchronization would require a separately authorized integration/API workflow.
+The repository now includes a Supabase schema with row-level security, a Chromium desktop capture extension, and setup instructions. The extension can upload rendered ChatGPT messages after you install it and sign in to your own Supabase project. It is a best-effort DOM observer, not an official ChatGPT transcript API; unloaded history may be missed and frontend changes can affect capture.
+
+Start with [`docs/SUPABASE_SETUP.md`](docs/SUPABASE_SETUP.md). The extension lives in [`extension/`](extension/), and the database migration is [`supabase/schema.sql`](supabase/schema.sql).
+
+**Not yet active:** the Action Canvas still stores its learning state in browser-local storage. The database contract for cross-device learning state and curated profile sync exists, but the frontend sign-in, hydration, conflict handling and profile editor remain to be implemented. iOS Safari extension packaging is also a separate future milestone; use manual Capture on mobile for now.
 
 ## Project structure
 
