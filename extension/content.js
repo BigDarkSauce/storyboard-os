@@ -18,8 +18,11 @@
       if(sent.has(key)) return;
       sent.add(key);
       chrome.runtime.sendMessage({type:"STORYBOARD_CAPTURE",message:{conversation_id:cid,message_id:messageId,role,content,source_url:location.href,message_order:index,content_hash:hash(content),captured_at:new Date().toISOString()}},response=>{
-        if(chrome.runtime.lastError) console.debug("Storyboard capture:",chrome.runtime.lastError.message);
-        else if(response&&!response.ok) console.debug("Storyboard capture paused/unavailable:",response.error);
+        if(chrome.runtime.lastError || !response || !response.ok) {
+          sent.delete(key);
+          console.debug("Storyboard capture will retry:",chrome.runtime.lastError?.message || response?.error || "No response");
+          setTimeout(schedule,5000);
+        }
       });
     });
   }
